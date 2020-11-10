@@ -1,0 +1,15 @@
+Province,Population,Electors/Électeurs,Valid Ballots/Bulletins valides,Percentage of Valid Ballots /Pourcentage des bulletins valides,Rejected Ballots/Bulletins rejetés,Percentage of Rejected Ballots /Pourcentage des bulletins rejetés,Total Ballots Cast/Total des bulletins déposés,Percentage of Voter Turnout/Pourcentage de la participation électorale
+"Newfoundland and Labrador/Terre-Neuve-et-Labrador",505469,410411,194695,99.5,974,.5,195669,47.7
+"Prince Edward Island/Île-du-Prince-Édouard",135851,108211,74170,99.4,466,.6,74636,69
+"Nova Scotia/Nouvelle-Écosse",913462,727875,436053,99.4,2498,.6,438551,60.3
+"New Brunswick/Nouveau-Brunswick",729997,590984,368144,99.1,3442,.9,371586,62.9
+"Quebec/Québec",7546131,5954763,3621275,98.6,50453,1.4,3671728,61.7
+"Ontario",12160282,8834987,5154006,99.6,23144,.4,5177150,58.6
+"Manitoba",1148401,835401,466777,99.6,1966,.4,468743,56.1
+"Saskatchewan",968157,715291,418216,99.7,1384,.3,419600,58.7
+"Alberta",3290350,2433695,1271160,99.7,3832,.3,1274992,52.4
+"British Columbia/Colombie-Britannique",4113487,2996864,1793400,99.6,6492,.4,1799892,60.1
+"Yukon",30372,23281,14660,99.6,61,.4,14721,63.2
+"Northwest Territories/Territoires du Nord-Ouest",41464,28787,13677,99.6,56,.4,13733,47.7
+"Nunavut",29474,17089,8061,99.6,31,.4,8092,47.4
+
