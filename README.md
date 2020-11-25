@@ -1,3 +1,8 @@
+
+## NOTE: This repository is under active development. You can expect significant changes in the short term.
+
+
+--- 
 # Elections Canada (1997 to the Present)
 
 This repository processes raw data from [Elections Canada](https://www.elections.ca/home.aspx) and presents said data in more researcher-friendly formats. 
