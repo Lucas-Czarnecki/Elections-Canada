@@ -659,8 +659,21 @@ EC_1997_present$Electors <- as.numeric(EC_1997_present$Electors)
 EC_1997_present$Votes <- as.numeric(EC_1997_present$Votes)
 EC_1997_present$Rejected_Ballots_PollNo <- as.numeric(EC_1997_present$Rejected_Ballots_PollNo)
 
+# 3. Export Data
+
 # Save Master File.
 saveRDS(EC_1997_present, file = "~/GitHub/Elections-Canada/data/processed/master/EC_1996_present.Rds")
+
+# Set working directory.
+setwd("~/GitHub/Elections-Canada/data/processed/parliaments")
+
+# Split dataframe into a list according to `Parliament`.
+EC_Parliaments <- split(EC_1997_present, list(EC_1997_present$Parliament)) 
+
+# Write a csv file for each general election by `Parliament`.
+for (Parliament in names(EC_Parliaments)) {
+  write.csv(EC_Parliaments[[Parliament]], paste0(Parliament, "_Parliament.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+}
 
 # TODO split csv files 
 # CSV files will need to be split as GitHub does not accept files larger than 100MB.
