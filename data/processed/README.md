@@ -2,6 +2,12 @@
 
 This README details the data processing and cleaning operations used to modify Elections Canada's (EC) raw data into formats that better lend themselves to scientific analysis. 
 
+Raw data were processed using a tidy format, which makes it possible for the user to study election results on a given election or even across time. As Elections Canada did not include any unique identifiers in their csv files to record the election or parliamentary session, processed data have been assigned new variables such as `Election_Date` and `Parliament` to identify each election. Furthermore, general inconsistencies, such as column names containing different characters across election years, inconsistent file encodings, and other inconsistencies, have all been corrected (to the best of my knowledge). 
+
+Below is a summary of each folder and the data contained therein:
+
+> TODO
+
 ## Cleaning Party Names 
 
 Elections Canada nomenclature is inconsistent across election years. Political party names were, therefore, cleaned to enforce a consistent naming scheme across EC's files. The chosen naming scheme was also applied to enforce consistency with other repositories in this collection such as data from the Library of Canadian Parliament in the [`Canadian-Federal-Elections`](https://github.com/Lucas-Czarnecki/Canadian-Federal-Elections) repository. 
