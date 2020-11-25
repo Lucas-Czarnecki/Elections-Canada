@@ -1,14 +1,14 @@
-﻿Province,Electors/Électeurs 2015,Electors/Électeurs 2011,Electors/Électeurs 2008,Electors/Électeurs 2006,Polling Stations/Bureaux de scrutin 2015,Polling Stations/Bureaux de scrutin 2011,Polling Stations/Bureaux de scrutin 2008,Polling Stations/Bureaux de scrutin 2006,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2015,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2011,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2008,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2006
-"Newfoundland and Labrador/Terre-Neuve-et-Labrador",421038,414779,410411,403982,1421,1464,1459,1475,296,283,281,274
-"Prince Edward Island/Île-du-Prince-Édouard",113505,108456,108211,107677,339,332,326,337,335,327,332,320
-"Nova Scotia/Nouvelle-Écosse",742931,733094,727875,750829,2402,2445,2397,2311,309,300,304,325
-"New Brunswick/Nouveau-Brunswick",597542,592818,590984,594104,1876,1948,1940,1919,319,304,305,310
-"Quebec/Québec",6393478,6130307,5954763,5852528,18153,17605,17186,16158,352,348,346,362
-"Ontario",9691517,9033266,8834987,8536359,26684,25821,25228,23781,363,350,350,359
-"Manitoba",887983,831041,835401,831278,2704,2658,2562,2486,328,313,326,334
-"Saskatchewan",779405,723814,715291,712427,2419,2466,2418,2366,322,294,296,301
-"Alberta",2842504,2509390,2433695,2322108,7535,7020,6737,6380,377,357,361,364
-"British Columbia/Colombie-Britannique",3392598,3109917,2996864,2875950,9092,8859,8469,8047,373,351,354,357
-"Yukon",26879,24341,23281,21493,82,99,91,95,328,246,256,226
-"Northwest Territories/Territoires du Nord-Ouest",30110,29020,28787,28792,91,81,89,86,331,358,323,335
-"Nunavut",20252,17349,17089,17088,59,54,53,36,343,321,322,475
+﻿Province,Electors/Électeurs 2019,Electors/Électeurs 2015,Electors/Électeurs 2011,Electors/Électeurs 2008,Polling Stations/Bureaux de scrutin 2019,Polling Stations/Bureaux de scrutin 2015,Polling Stations/Bureaux de scrutin 2011,Polling Stations/Bureaux de scrutin 2008,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2019,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2015,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2011,Average Number of Electors per Poll/Moyenne d'électeurs par bureau 2008
+"Newfoundland and Labrador/Terre-Neuve-et-Labrador",420067,421038,414779,410411,1394,1421,1464,1459,301,296,283,281
+"Prince Edward Island/Île-du-Prince-Édouard",116721,113505,108456,108211,340,339,332,326,343,335,327,332
+"Nova Scotia/Nouvelle-Écosse",771411,742931,733094,727875,2372,2402,2445,2397,325,309,300,304
+"New Brunswick/Nouveau-Brunswick",616704,597542,592818,590984,1836,1876,1948,1940,336,319,304,305
+"Quebec/Québec",6482847,6393478,6130307,5954763,18077,18153,17605,17186,359,352,348,346
+"Ontario",10484419,9691517,9033266,8834987,26631,26684,25821,25228,394,363,350,350
+"Manitoba",927347,887983,831041,835401,2701,2704,2658,2562,343,328,313,326
+"Saskatchewan",807984,779405,723814,715291,2386,2419,2466,2418,339,322,294,296
+"Alberta",3023980,2842504,2509390,2433695,7780,7535,7020,6737,389,377,357,361
+"British Columbia/Colombie-Britannique",3641258,3392598,3109917,2996864,9055,9092,8859,8469,402,373,351,354
+"Yukon",29591,26879,24341,23281,89,82,99,91,332,328,246,256
+"Northwest Territories/Territoires du Nord-Ouest",30704,30110,29020,28787,101,91,81,89,304,331,358,323
+"Nunavut",20025,20252,17349,17089,55,59,54,53,364,343,321,322

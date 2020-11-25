@@ -1,14 +1,14 @@
-﻿Province,Parti libéral du Canada Hommes,Parti libéral du Canada Femmes,Parti conservateur du Canada Hommes,Parti conservateur du Canada Femmes,Nouveau Parti démocratique Hommes,Nouveau Parti démocratique Femmes,Bloc Québécois Hommes,Bloc Québécois Femmes,Le Parti Vert du Canada  Hommes,Le Parti Vert du Canada Femmes,Autres Hommes,Autres Femmes,Total Hommes,Total Femmes
-"Newfoundland and Labrador/Terre-Neuve-et-Labrador",4,3,0,0,0,0,0,0,0,0,0,0,4,3
-"Prince Edward Island/Île-du-Prince-Édouard",4,0,0,0,0,0,0,0,0,0,0,0,4,0
-"Nova Scotia/Nouvelle-Écosse",10,1,0,0,0,0,0,0,0,0,0,0,10,1
-"New Brunswick/Nouveau-Brunswick",7,3,0,0,0,0,0,0,0,0,0,0,7,3
-"Quebec/Québec",31,9,11,1,9,7,8,2,0,0,0,0,59,19
-"Ontario",52,28,27,6,4,4,0,0,0,0,0,0,83,38
-"Manitoba",6,1,4,1,1,1,0,0,0,0,0,0,11,3
-"Saskatchewan",1,0,8,2,1,2,0,0,0,0,0,0,10,4
-"Alberta",4,0,25,4,0,1,0,0,0,0,0,0,29,5
-"British Columbia/Colombie-Britannique",12,5,7,3,11,3,0,0,0,1,0,0,30,12
-"Yukon",1,0,0,0,0,0,0,0,0,0,0,0,1,0
-"Northwest Territories/Territoires du Nord-Ouest",1,0,0,0,0,0,0,0,0,0,0,0,1,0
-"Nunavut",1,0,0,0,0,0,0,0,0,0,0,0,1,0
+﻿Province,Liberal Party of Canada_Male / Parti libéral du Canada_Hommes,Liberal Party of Canada_Female / Parti libéral du Canada_Femmes,Liberal Party of Canada_Another gender / Parti libéral du Canada_Autre genre,Liberal Party of Canada_Unknown / Parti libéral du Canada_Inconnu,Conservative Party of Canada_Male / Parti conservateur du Canada_Hommes,Conservative Party of Canada_Female / Parti conservateur du Canada_Femmes,Conservative Party of Canada_Another gender / Parti conservateur du Canada_Autre genre,Conservative Party of Canada_Unknown / Parti conservateur du Canada_Inconnu,Bloc Québécois_Male / Bloc Québécois_Hommes,Bloc Québécois_Female / Bloc Québécois_Femmes,Bloc Québécois_Another gender / Bloc Québécois_Autre genre,Bloc Québécois_Unknown / Bloc Québécois_Inconnu,New Democratic Party_Male / Nouveau Parti démocratique_Hommes,New Democratic Party_Female / Nouveau Parti démocratique_Femmes,New Democratic Party_Another gender / Nouveau Parti démocratique_Autre genre,New Democratic Party_Unknown / Nouveau Parti démocratique_Inconnu,Green Party of Canada_Male / Le Parti Vert du Canada_Hommes,Green Party of Canada_Female / Le Parti Vert du Canada_Femmes,Green Party of Canada_Another gender / Le Parti Vert du Canada_Autre genre,Green Party of Canada_Unknown / Le Parti Vert du Canada_Inconnu,Others_Male / Autres_Hommes,Others_Female / Autres_Femmes,Others_Another gender / Autres_Autre genre,Others_Unknown / Autres_Inconnu,Total_Male / Total_Hommes,Total_Female / Total_Femmes,Total_Another gender / Total_Autre genre,Total_Unknown / Total_Inconnu
+"Newfoundland and Labrador/Terre-Neuve-et-Labrador",4,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,5,2,0,0
+"Prince Edward Island/Île-du-Prince-Édouard",4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0
+"Nova Scotia/Nouvelle-Écosse",8,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,2,0,0
+"New Brunswick/Nouveau-Brunswick",5,1,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,8,2,0,0
+"Quebec/Québec",21,14,0,0,10,0,0,0,20,12,0,0,1,0,0,0,0,0,0,0,0,0,0,0,52,26,0,0
+"Ontario",49,30,0,0,30,6,0,0,0,0,0,0,4,2,0,0,0,0,0,0,0,0,0,0,83,38,0,0
+"Manitoba",4,0,0,0,5,2,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,10,4,0,0
+"Saskatchewan",0,0,0,0,11,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,3,0,0
+"Alberta",0,0,0,0,28,5,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,28,6,0,0
+"British Columbia/Colombie-Britannique",8,3,0,0,11,6,0,0,0,0,0,0,8,3,0,0,1,1,0,0,0,1,0,0,28,14,0,0
+"Yukon",1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+"Northwest Territories/Territoires du Nord-Ouest",1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+"Nunavut",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
