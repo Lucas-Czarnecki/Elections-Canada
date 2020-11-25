@@ -55,8 +55,8 @@ parl43 <- parl43 %>%
          Void_Poll = `....Void Poll Indicator/Indicateur de bureau supprimé`,
          Merged_With = `....Merge With/Fusionné avec`,
          Rejected_Ballots_PollNo = `....Rejected Ballots for Polling Station/Bulletins rejetés du bureau`,
-         Pollitical_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
-         Pollitical_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
+         Political_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
+         Political_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
          Incumbent = `....Incumbent Indicator/Indicateur_Candidat sortant`,
          Result = `....Elected Candidate Indicator/Indicateur du candidat élu`,
          Electors = `....Electors for Polling Station/Électeurs du bureau`,
@@ -88,7 +88,7 @@ parl43 <- parl43 %>%
 # Create `Province_Territory` column in `parl43.` based on supplementary data.
 
 # Load supplementary table to identify `Province_Territory` in `parl43` based on common Electoral District Number in said data and table 11.
-sup43 <- read_csv("GitHub/Elections-Canada/data/raw/Parliament 43/tables/table_tableau11.csv")
+sup43 <- read_csv("~/GitHub/Elections-Canada/data/raw/Parliament 43/tables/table_tableau11.csv")
 
 # Identify the province or territory for each electoral district. To this end, the name of the province or territory is identified by matching the Electoral district numbers in `parl43` to the same variable in `sup43`.
 parl43$Province_Territory <-  sup43$Province[match(parl43$Electoral_District_No, sup43$`Electoral District Number/Numéro de circonscription`)] 
@@ -99,7 +99,7 @@ parl43 <- parl43 %>%
   
 # Organize column order.
 parl43 <- parl43 %>%
-  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Pollitical_Affiliation, Pollitical_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
+  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Political_Affiliation, Political_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
 
 # ==== Parliament 42 ====
 
@@ -133,8 +133,8 @@ parl42 <- parl42 %>%
          Void_Poll = `....Void Poll Indicator/Indicateur de bureau supprimé`,
          Merged_With = `....Merge With/Fusionné avec`,
          Rejected_Ballots_PollNo = `....Rejected Ballots for Polling Station/Bulletins rejetés du bureau`,
-         Pollitical_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
-         Pollitical_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
+         Political_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
+         Political_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
          Incumbent = `....Incumbent Indicator/Indicateur_Candidat sortant`,
          Result = `....Elected Candidate Indicator/Indicateur du candidat élu`,
          Electors = `....Electors for Polling Station/Électeurs du bureau`,
@@ -160,7 +160,7 @@ parl42 <- parl42 %>%
 # Create `Province_Territory` column in `parl42` based on supplementary data.
 
 # Load supplementary table to identify `Province_Territory` in `parl42` based on common Electoral District Number in said data and table 11.
-sup42 <- read_csv("GitHub/Elections-Canada/data/raw/Parliament 42/tables/table_tableau11.csv")
+sup42 <- read_csv("~/GitHub/Elections-Canada/data/raw/Parliament 42/tables/table_tableau11.csv")
 
 # Identify the province or territory for each electoral district. To this end, the name of the province or territory is identified by matching the Electoral district numbers in `parl42` to the same variable in `sup42`.
 parl42$Province_Territory <-  sup42$Province[match(parl42$Electoral_District_No, sup42$`Electoral District Number/Numéro de circonscription`)] 
@@ -171,7 +171,7 @@ parl42 <- parl42 %>%
 
 # Organize column order.
 parl42 <- parl42 %>%
-  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Pollitical_Affiliation, Pollitical_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
+  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Political_Affiliation, Political_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
 
 # ==== Parliament 41 ====
 
@@ -208,8 +208,8 @@ parl41 <- parl41 %>%
          Last_Name =  `....Candidate's Family Name/Nom de famille du candidat`,
          First_Name = `....Candidate's First Name/Prénom du candidat`,
          Middle_Names = `....Candidate's Middle Name/Second prénom du candidat`,
-         Pollitical_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
-         Pollitical_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
+         Political_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
+         Political_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
          Incumbent = `....Incumbent Indicator/Indicateur_Candidat sortant`,
          Result = `....Elected Candidate Indicator/Indicateur du candidat élu`,
          Electors = `....Electors for Polling Station/Électeurs du bureau`,
@@ -230,7 +230,7 @@ parl41 <- parl41 %>%
 # Create `Province_Territory` column in `parl41` based on supplementary data.
 
 # Load supplementary table to identify `Province_Territory` in `parl41` based on common Electoral District Number in said data and table 11.
-sup41 <- read_csv("GitHub/Elections-Canada/data/raw/Parliament 41/tables/table_tableau11.csv", locale = locale(encoding = "WINDOWS-1252"))
+sup41 <- read_csv("~/GitHub/Elections-Canada/data/raw/Parliament 41/tables/table_tableau11.csv", locale = locale(encoding = "WINDOWS-1252"))
 
 # Identify the province or territory for each electoral district. To this end, the name of the province or territory is identified by matching the Electoral district numbers in `parl41` to the same variable in `sup41`.
 parl41$Province_Territory <-  sup41$Province[match(parl41$Electoral_District_No, sup41$`Electoral District Number/Numéro de circonscription`)] 
@@ -241,7 +241,7 @@ parl41 <- parl41 %>%
 
 # Organize column order.
 parl41 <- parl41 %>%
-  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Pollitical_Affiliation, Pollitical_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
+  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Political_Affiliation, Political_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
 
 # ==== Parliament 40 ====
 
@@ -278,8 +278,8 @@ parl40 <- parl40 %>%
          Last_Name =  `....Candidate's Family Name/Nom de famille du candidat`,
          First_Name = `....Candidate's First Name/Prénom du candidat`,
          Middle_Names = `....Candidate's Middle Name/Second prénom du candidat`,
-         Pollitical_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
-         Pollitical_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
+         Political_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
+         Political_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
          Incumbent = `....Incumbent Indicator/Indicateur_Candidat sortant`,
          Result = `....Elected Candidate Indicator/Indicateur du candidat élu`,
          Electors = `....Electors for Polling Station/Électeurs du bureau`,
@@ -300,7 +300,7 @@ parl40 <- parl40 %>%
 # Create `Province_Territory` column in `parl40` based on supplementary data.
 
 # Load supplementary table to identify `Province_Territory` in `parl40` based on common Electoral District Number in said data and table 11.
-sup40 <- read_csv("GitHub/Elections-Canada/data/raw/Parliament 40/tables/table_tableau11.csv", locale = locale(encoding = "WINDOWS-1252"))
+sup40 <- read_csv("~/GitHub/Elections-Canada/data/raw/Parliament 40/tables/table_tableau11.csv", locale = locale(encoding = "WINDOWS-1252"))
 
 # Identify the province or territory for each electoral district. To this end, the name of the province or territory is identified by matching the Electoral district numbers in `parl40` to the same variable in `sup40`.
 parl40$Province_Territory <-  sup40$Province[match(parl40$Electoral_District_No, sup40$`Electoral District Number/Numéro de circonscription`)] 
@@ -314,7 +314,7 @@ parl40$Constituency <- gsub("\"", "", parl40$Constituency)
 
 # Organize column order.
 parl40 <- parl40 %>%
-  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Pollitical_Affiliation, Pollitical_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
+  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Political_Affiliation, Political_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
 
 # ==== Parliament 39 ====
 
@@ -351,8 +351,8 @@ parl39 <- parl39 %>%
          Last_Name =  `....Candidate's Family Name/Nom de famille du candidat`,
          First_Name = `....Candidate's First Name/Prénom du candidat`,
          Middle_Names = `....Candidate's Middle Name/Second prénom du candidat`,
-         Pollitical_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
-         Pollitical_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
+         Political_Affiliation = `....Political Affiliation Name_English/Appartenance politique_Anglais`,
+         Political_Affiliation_Fr = `....Political Affiliation Name_French/Appartenance politique_Français`,
          Incumbent = `....Incumbent Indicator/Indicateur_Candidat sortant`,
          Result = `....Elected Candidate Indicator/Indicateur du candidat élu`,
          Electors = `....Electors for Polling Station/Électeurs du bureau`,
@@ -372,7 +372,7 @@ parl39 <- parl39 %>%
 # Create `Province_Territory` column in `parl39` based on supplementary data.
 
 # Load supplementary table to identify `Province_Territory` in `parl39` based on common Electoral District Number in said data and table 11.
-# sup39 <- read_csv("GitHub/Elections-Canada/data/raw/Parliament 39/tables/table_tableau11.csv", locale = locale(encoding = "WINDOWS-1252"))
+# sup39 <- read_csv("~/GitHub/Elections-Canada/data/raw/Parliament 39/tables/table_tableau11.csv", locale = locale(encoding = "WINDOWS-1252"))
 
 # Identify the province or territory for each electoral district. To this end, the name of the province or territory is identified by matching the Electoral district numbers in `parl39` to the same variable in `sup39`.
 parl39$Province_Territory <-  sup40$Province[match(parl39$Electoral_District_No, sup40$`Electoral District Number/Numéro de circonscription`)] 
@@ -385,7 +385,7 @@ parl39 <- parl39 %>%
 
 # Organize column order.
 parl39 <- parl39 %>%
-  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Pollitical_Affiliation, Pollitical_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
+  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Electoral_District_No, Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Last_Name, First_Name, Middle_Names, Political_Affiliation, Political_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
 
 # ==== Parliament 38 ==== 
 
@@ -419,14 +419,9 @@ parl38 <- parl38 %>%
          Total_Votes = `....Total Vote`,
          Rejected_Ballots_PollNo = `....Rejected Ballots`)
 
-# alt. approach:
-# grepl("...." , names(parl38), fixed = TRUE)
-# data.frame(lapply(parl38, as.character), stringsAsFactors=FALSE)
-# ifelse()
+# Note: Poll-by-poll results are not in a tidyr form. Each candidate's vote totals, for instance, are presented in a separate column such that there is a separate column for each candidate. As a result there are close to 1,700 "variables" in the data set at this point. The next operation is to transform the data from a wide to long format to reduce the number of columns and lengthen the data set. 
 
-# Note: Poll-by-poll results are not in a tidyr form. Each candidate's vote totals, for instance, are presented in a separate column such that there is a separate column for each candidate. As a result there are close to 1,700 "variables" in the data set at this point. The next operation, therefore, is to transform the data from a wide to long format to reduce the number of columns and lengthen the data set. 
-
-# Increases the length and reduces the number of columns to create a tidier dataset. Two new variables are created. `Candidate` records the candidates' names, while "Votes" records the total number of votes the candidate received at a given polling station.  
+# Increases the length and reduces the number of columns to create a tidier data froma. Two new variables are created. `Candidate` records the candidates' names, while "Votes" records the total number of votes the candidate received at a given polling station.  
 parl38 <- parl38 %>% 
   pivot_longer(
     cols = starts_with("...."),
@@ -474,7 +469,7 @@ parl38$Votes[parl38$Votes==""] <- NA
 parl38$Province_Territory <- NA
 parl38$Province_Territory_Fr <- NA
 parl38$Political_Affiliation <- NA
-parl38$Pollitical_Affiliation_Fr <- NA
+parl38$Political_Affiliation_Fr <- NA
 parl38$Result <- NA 
 parl38$Void_Poll <- NA
 parl38$No_Poll_Held <- NA
@@ -483,17 +478,19 @@ parl38$Electoral_District_No <- NA
 
 # Order variables
 parl38 <- parl38 %>% 
-  select("Province_Territory", "Province_Territory_Fr", "Election_Date", "Election_Type", "Parliament", "Constituency", "Constituency_Fr", "Electoral_District_No", "Electors", "Polling_Station_Name", "Polling_Station_No", "Merged_With", "Void_Poll", "No_Poll_Held", "Candidate", "Last_Name", "First_Name", "Middle_Names", "Political_Affiliation", "Pollitical_Affiliation_Fr", "Incumbent", "Result", "Votes", "Rejected_Ballots_PollNo")
+  select("Province_Territory", "Province_Territory_Fr", "Election_Date", "Election_Type", "Parliament", "Constituency", "Constituency_Fr", "Electoral_District_No", "Electors", "Polling_Station_Name", "Polling_Station_No", "Merged_With", "Void_Poll", "No_Poll_Held", "Candidate", "Last_Name", "First_Name", "Middle_Names", "Political_Affiliation", "Political_Affiliation_Fr", "Incumbent", "Result", "Votes", "Rejected_Ballots_PollNo")
 
-# Import table with supplementary data on Parliament 38. (Table 12).
-sup38 <- read_csv("GitHub/Elections-Canada/data/raw/Parliament 38/tables/table12.csv",
+# Identify candidates' political affiliations.
+
+# Political affiliations for `parl38` are found in supplementary data. Specifically, table 12 in Parliament 38. 
+sup38 <- read_csv("~/GitHub/Elections-Canada/data/raw/Parliament 38/tables/table12.csv",
                   locale = locale(encoding = "WINDOWS-1252"))
 
-# Rename relevant columns
+# Rename relevant columns.
 sup38 <- sup38 %>% 
   rename(Province_Territory = `Province`,
          Constituency = `District`,
-         Messy_Candidate = `Candidate`) # Very messy data. Someone decided to combine candidates' names with party affiliation. Needs a lot of work. 
+         Messy_Candidate = `Candidate`) # Raw data combines candidates' names with party affiliation.
 
 # For `Province_Territory` separate English from French.
 sup38 <- sup38 %>% 
@@ -510,7 +507,6 @@ sup38 <- sup38 %>%
 
 # Missing values are treated as the same spelling. 
 sup38$Constituency_Fr <- ifelse(is.na(sup38$Constituency_Fr), sup38$Constituency, sup38$Constituency_Fr)
-
 
 # Match data from supplementary table to main elections results data frame. 
 parl38$Province_Territory  <- sup38$Province_Territory[match(parl38$Constituency, sup38$Constituency)]
@@ -571,7 +567,7 @@ sup38$Political_Affiliation <- clean_names(messy_names, cleaned_names, sup38$Pol
 parl38$Political_Affiliation <- sup38$Political_Affiliation[match(parl38$Candidate, sup38$Candidate)]
 
 # Import table with supplementary data on Parliament 38. (Table 12). This table only records the names of candidates who won in their respective ridings. From this list of successful candidates the `Result` variable can be created for `parl38`. 
-sup38_2 <- read_csv("GitHub/Elections-Canada/data/raw/Parliament 38/tables/table11.csv",
+sup38_2 <- read_csv("~/GitHub/Elections-Canada/data/raw/Parliament 38/tables/table11.csv",
                     locale = locale(encoding = "WINDOWS-1252"))
 
 # Candidate names in table 11 need to be cleaned before it will be possible to match results between data frames.
@@ -607,8 +603,7 @@ sup38_2$Candidate <- gsub(" NA", "", sup38_2$Candidate)
 # In `parl38` record that a candidate won if the same candidate is found in table `sup38_2`. Here values correspond to `Canadian-Federal-Elections` (i.e., "Elected", "Defeated") naming conventions and not Elections Canada's scheme (i.e., "Y", "N").
 parl38$Result <- ifelse(parl38$Candidate %in% sup38_2$Candidate, 
                         "Elected", 
-                        "Defeated"
-)
+                        "Defeated")
 
 # TODO check if the below is viable. 
 # Parliament 387 is missing `Electoral_District_No`. There is no supplementary data for parliaments before parliament 38. Supplementary data that was assigned to parliament 40 is used instead to match electoral district numbers based on matching constituency names between the two data frames. 
@@ -636,7 +631,7 @@ parl38$Electoral_District_No <- parl39$Electoral_District_No[match(parl38$Consti
 # ---- Concatenate, Clean, and Export ----
 
 # 1. Concatenate data frames
-EC_1997_present <- rbind(parl39, parl40, parl42, parl43)
+EC_1997_present <- rbind(parl38, parl39, parl40, parl42, parl43)
 
 # FIXME parl38 cannot be added above due to an error. 
 # Error: Error in match.names(clabs, names(xi)) : names do not match previous names
