@@ -19,7 +19,7 @@ source("~/GitHub/Elections-Canada/R/EC_Paths.R")
 
 # ---- Description of Raw Data ----
 
-# General Notes: Elections Canada (EC) inconsistently presents data in two formats (i.e., wide and long) and uses different file extentions (.csv and .txt) for election results between 1996 and 2019. This script processes the raw data into a tidy format that can be used to analyze election results across time. Unfortunately, Elections Canada did not include any unique identifiers in their csv files to record the election or parliamentary session. For this reason, raw data are read from their respective folders and assigned variables such as `Election_Date` and `Parliament` to identify the election. Furthermore, general inconsistencies, such as colnames containing different characters across election years, missing format options, and other inconsistencies, necessitate small variations on what could have otherwise been a more concise script. Parliament 38, for example, is limited to poll-by-poll election results in EC's "format 1" (i.e., a wide format where each candidate's name appears as a column). Parliaments 36 and 37 present data in an even messier wide format that requires much more effort to process. For more information on the original data, variables, and cleaning operations, please consult the README files in this repository. 
+# General Notes: Elections Canada (EC) inconsistently presents data in two formats (i.e., wide and long) and uses different file extensions (.csv and .txt) for election results between 1996 and 2019. This script processes the raw data into a tidy format that can be used to analyze election results across time. Unfortunately, Elections Canada did not include any unique identifiers in their csv files to record the election or parliamentary session. For this reason, raw data are read from their respective folders and assigned variables such as `Election_Date` and `Parliament` to identify the election. Furthermore, general inconsistencies, such as colnames containing different characters across election years, missing format options, and other inconsistencies, necessitate small variations on what could have otherwise been a more concise script. Parliament 38, for example, is limited to poll-by-poll election results in EC's "format 1" (i.e., a wide format where each candidate's name appears as a column). Parliaments 36 and 37 present data in an even messier wide format that requires much more effort to process. For more information on the original data, variables, and cleaning operations, please consult the README files in this repository. 
 
 # TODO consider creating a master lookup table to replace supplementary tables in this script. 
 
@@ -616,17 +616,782 @@ parl38$Electoral_District_No <- parl39$Electoral_District_No[match(parl38$Consti
 # TODO 
 # Use table 11 to identify the candidates who won; the `Result` variable. 
 
-# ==== Parliament 37 ==== 
+# ==== Parliament 36 and 37 ==== 
 
-# TODO
-# Clean .txt files. 
-# See file `EC_Temp2.R`
+# == Parliament 37 == 
 
-# ==== Parliament 36 ====
+# Apply a custom function to read txt files 
+parl37 <- lapply(path37, custom_read_delim) 
 
-# TODO
-# Clean .txt files. 
-# See file `EC_Temp2.R`
+# Create two new columns for each element in the list. One to identify the date of the election and the other to identify the Parliamentary session.
+parl37 <- lapply(parl37, function(x)
+  cbind(x, Election_Date="2000-11-27")) %>% 
+  lapply(function(x)
+    cbind(x, Parliament="37")) %>% 
+  lapply(function(x)
+    cbind(x, Election_Type="General"))
+
+# Ensure that all variables are consistently encoded within each element. For simplicity, all columns are treated as characters. 
+parl37 <- lapply(parl37, function(parl37) mutate_all(parl37, as.character))
+
+# Concatenate results into a single data frame.
+parl37 <- parl37 %>%
+  bind_rows()
+
+# == Parliament 36 == 
+
+# Apply a custom function to read .txt files 
+parl36 <- lapply(path36, custom_read_delim) 
+
+# Create two new columns for each element in the list. One to identify the date of the election and the other to identify the Parliamentary session.
+parl36 <- lapply(parl36, function(x)
+  cbind(x, Election_Date="1997-06-02")) %>% 
+  lapply(function(x)
+    cbind(x, Parliament="36")) %>% 
+  lapply(function(x)
+    cbind(x, Election_Type="General"))
+
+# Ensure that all variables are consistently encoded within each element. For simplicity, all columns are treated as characters. 
+parl36 <- lapply(parl36, function(parl36) mutate_all(parl36, as.character))
+
+# Concatenate results into a single data frame.
+parl36 <- parl36 %>%
+  bind_rows()
+
+# Rename columns for parliament 36.
+parl36 <- parl36 %>% 
+  rename(Event_Number = `....event_number`,
+         Event_Name = `....event_english_name`,
+         Event_Name_Fr = `....event_french_name`,
+         Ed_Code =  `....ed_code`, # TODO Different format from Electoral_District_No. Keep current name as a reminder to reformat. 
+         Constituency = `....ed_english_name`,
+         Constituency_Fr = `....ed_french_name`,
+         Province_Territory = `....province_name_english`, 
+         Province_Territory_Fr = `....province_name_french`,
+         Poll_Rejected_Ballots = `....poll_rejected_ballot_count`,
+         Total_Rejected_Ballots = `....ed_rejected_ballot_count`,
+         Poll_Total_Ballots = `....poll_total_ballot_count`,
+         Poll_Valid_Votes = `....poll_valid_vote_count`,
+         Total_Valid_Votes = `....ed_valid_vote_count`,
+         Poll_Electors = `....poll_electors_on_list_count`,
+         Total_Electors = `....ed_electors_on_list_count`,
+         Poll_Count = `....total_poll_count`, 
+         Advanced_Count = `....advance_poll_count`,
+         Mobile_Count = `....mobile_poll_count`,
+         SVR_Count = `....svr_group1_ballot_count`, # Special Voting Rules include alternative methods of voting such as by mail.
+         SVR_Count2 = `....svr_group2_ballot_count`,
+         SVR_Total = `....svr_total_ballot_count`,
+         Population = `....population_cnt`,
+         Census_Year = `....census_year`,
+         Judicial_Recount = `....judicial_recount_indictator`, 
+         Majority_Count = `....majority_count`,
+         Majority_Precentage = `....majority_percentage`,
+         Voter_Turnout = `....voter_participation_percentage`, # TODO Should double-check how they calculated this variable.
+         Elected_Party = `....elected_party_english_name`,
+         Elected_Party_Fr = `....elected_party_french_name`,
+         Returning_Officer = `....returning_officer`,
+         Polling_Station_Name = `....polling_station_name`,
+         Polling_Station_No = `....poll_number`,
+         Poll_Type = `....poll_type`,
+         Urban_Rural = `....urban_rural_indicator`,
+         Void_Poll = `....void_indicator`,
+         No_Poll_Held = `....no_poll_indicator`,
+         Split_Poll = `....split_indicator`,
+         Merged_Poll = `....merge_indicator`,
+         Merged_With = `....merged_with_poll_number`,
+         Advanced_Poll = `....advance_poll_indicator`,
+         SVR_Poll = `....svr_poll_indicator`,
+         Mobile_Poll = `....mobile_poll_indicator`, 
+  ) 
+
+# Remove redundant columns. Event_Name is already captured in variables such as `Election_Date`, `Parliament`, and `Election_Type`.
+parl36 <- parl36 %>% 
+  select(-contains("Event_Name"), -contains("Event_Name_Fr"))
+
+# Treat blank cells as missing values.
+parl36 <- parl36 %>% 
+  mutate_all(na_if, "")
+
+# Create a unique ID for rows.
+parl36 <- tibble::rowid_to_column(parl36, "ID")
+
+# Rename columns for parliament 37
+# Note: see above notes on parliament 36 as they also apply below.
+parl37 <- parl37 %>% 
+  rename(Event_Number = `....event_number`,
+         Event_Name = `....event_english_name`,
+         Event_Name_Fr = `....event_french_name`,
+         Ed_Code =  `....ed_code`,  
+         Constituency = `....ed_english_name`,
+         Constituency_Fr = `....ed_french_name`,
+         Province_Territory = `....province_name_english`, 
+         Province_Territory_Fr = `....province_name_french`,
+         Poll_Rejected_Ballots = `....poll_rejected_ballot_count`,
+         Total_Rejected_Ballots = `....ed_rejected_ballot_count`,
+         Poll_Total_Ballots = `....poll_total_ballot_count`,
+         Poll_Valid_Votes = `....poll_valid_vote_count`,
+         Total_Valid_Votes = `....ed_valid_vote_count`,
+         Poll_Electors = `....poll_electors_on_list_count`,
+         Total_Electors = `....ed_electors_on_list_count`,
+         Poll_Count = `....total_poll_count`, 
+         Advanced_Count = `....advance_poll_count`,
+         Mobile_Count = `....mobile_poll_count`,
+         SVR_Count = `....svr_group1_ballot_count`, 
+         SVR_Count2 = `....svr_group2_ballot_count`,
+         SVR_Total = `....svr_total_ballot_count`,
+         Population = `....population_cnt`,
+         Census_Year = `....census_year`,
+         Judicial_Recount = `....judicial_recount_indictator`, 
+         Majority_Count = `....majority_count`,
+         Majority_Precentage = `....majority_percentage`,
+         Voter_Turnout = `....voter_participation_percentage`,
+         Elected_Party = `....elected_party_english_name`,
+         Elected_Party_Fr = `....elected_party_french_name`,
+         Returning_Officer = `....returning_officer`,
+         Polling_Station_Name = `....polling_station_name`,
+         Polling_Station_No = `....poll_number`,
+         Poll_Type = `....poll_type`,
+         Urban_Rural = `....urban_rural_indicator`,
+         Void_Poll = `....void_indicator`,
+         No_Poll_Held = `....no_poll_indicator`,
+         Split_Poll = `....split_indicator`,
+         Merged_Poll = `....merge_indicator`,
+         Merged_With = `....merged_with_poll_number`,
+         Advanced_Poll = `....advance_poll_indicator`,
+         SVR_Poll = `....svr_poll_indicator`,
+         Mobile_Poll = `....mobile_poll_indicator`, 
+  ) 
+
+# Remove redundant columns.
+parl37 <- parl37 %>% 
+  select(-contains("Event_Name"), -contains("Event_Name_Fr"))
+
+# Treat blank cells as missing values.
+parl37 <- parl37 %>% 
+  mutate_all(na_if, "")
+
+# Create a unique ID for rows.
+parl37 <- tibble::rowid_to_column(parl37, "ID")
+
+# Create a new column to identify the candidate who was elected in each ED. Remove redundant columns.
+parl36 <- parl36 %>% 
+  unite(col="Elected_Candidate", 
+        c("....elected_last_name", "....elected_first_name", "....elected_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep =", ")
+
+# Unite candidate columns. Remove redundant columns.
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_1", 
+        c("....cand_1_last_name", "....cand_1_first_name", "....cand_1_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_2", 
+        c("....cand_2_last_name", "....cand_2_first_name", "....cand_2_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_3", 
+        c("....cand_3_last_name", "....cand_3_first_name", "....cand_3_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_4", 
+        c("....cand_4_last_name", "....cand_4_first_name", "....cand_4_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_5", 
+        c("....cand_5_last_name", "....cand_5_first_name", "....cand_5_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_6", 
+        c("....cand_6_last_name", "....cand_6_first_name", "....cand_6_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_7", 
+        c("....cand_7_last_name", "....cand_7_first_name", "....cand_7_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_8", 
+        c("....cand_8_last_name", "....cand_8_first_name", "....cand_8_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_9", 
+        c("....cand_9_last_name", "....cand_9_first_name", "....cand_9_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_10", 
+        c("....cand_10_last_name", "....cand_10_first_name", "....cand_10_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_11", 
+        c("....cand_11_last_name", "....cand_11_first_name", "....cand_11_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_12", 
+        c("....cand_12_last_name", "....cand_12_first_name", "....cand_12_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl36 <- parl36 %>% 
+  unite(col = "Candidate_13", 
+        c("....cand_13_last_name", "....cand_13_first_name", "....cand_13_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+# Clean `Elected_Candidate`
+parl36$Elected_Candidate <- gsub(", NA", "", parl36$Elected_Candidate)
+parl36$Elected_Candidate <- gsub("((?:[^,]+, ){1}[^,]+),", "\\1", parl36$Elected_Candidate) # Hat tip to P.K.Rajwanshi for working out this regular expression. 
+
+# Subset data. Create a separate data frame for candidates (wide format). Include variables on EDs/polls to serve as a combined key that can later be used to match data. 
+parl36_cand <- parl36 %>% 
+  select(starts_with("Candidate_"), 
+         "Ed_Code",
+         "ID",
+         starts_with("Polling_Station_"), 
+         starts_with("...."))
+
+# Treat blank cells as missing values.
+parl36_cand <- parl36_cand %>% 
+  mutate_all(na_if, "")
+
+# Simplify election results. Keep only the data already in tidy(ish) format.
+parl36 <- parl36 %>% 
+  select(-contains("...."), 
+         -contains("Candidate_"))
+
+# Subset data and rename columns for each candidate number. 
+cand1 <- parl36_cand %>% 
+  select("ID", "Candidate_1", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_1_"))
+
+cand1 <- cand1 %>% 
+  rename(Candidate = Candidate_1,
+         Political_Affiliation = `....cand_1_party_english_name`,
+         Political_Affiliation_Fr = `....cand_1_party_french_name`,
+         Gender = `....cand_1_gender_code`,
+         Result = `....cand_1_elected_indicator`,
+         Incumbent = `....cand_1_incumbent_indicator`,
+         Votes = `....cand_1_poll_vote`)
+
+# Variations on the code above is used to tidy data for each candidate. 
+cand2 <- parl36_cand %>% 
+  select("ID", "Candidate_2", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_2_"))
+
+cand2 <- cand2 %>% 
+  rename(Candidate = Candidate_2,
+         Political_Affiliation = `....cand_2_party_english_name`,
+         Political_Affiliation_Fr = `....cand_2_party_french_name`,
+         Gender = `....cand_2_gender_code`,
+         Result = `....cand_2_elected_indicator`,
+         Incumbent = `....cand_2_incumbent_indicator`,
+         Votes = `....cand_2_poll_vote`)
+
+# Candidate 3. 
+cand3 <- parl36_cand %>% 
+  select("ID", "Candidate_3", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_3_"))
+
+cand3 <- cand3 %>% 
+  rename(Candidate = Candidate_3,
+         Political_Affiliation = `....cand_3_party_english_name`,
+         Political_Affiliation_Fr = `....cand_3_party_french_name`,
+         Gender = `....cand_3_gender_code`,
+         Result = `....cand_3_elected_indicator`,
+         Incumbent = `....cand_3_incumbent_indicator`,
+         Votes = `....cand_3_poll_vote`)
+
+# Candidate 4. 
+cand4 <- parl36_cand %>% 
+  select("ID", "Candidate_4", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_4_"))
+
+cand4 <- cand4 %>% 
+  rename(Candidate = Candidate_4,
+         Political_Affiliation = `....cand_4_party_english_name`,
+         Political_Affiliation_Fr = `....cand_4_party_french_name`,
+         Gender = `....cand_4_gender_code`,
+         Result = `....cand_4_elected_indicator`,
+         Incumbent = `....cand_4_incumbent_indicator`,
+         Votes = `....cand_4_poll_vote`)
+
+# Candidate 5. 
+cand5 <- parl36_cand %>% 
+  select("ID", "Candidate_5", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_5_"))
+
+cand5 <- cand5 %>% 
+  rename(Candidate = Candidate_5,
+         Political_Affiliation = `....cand_5_party_english_name`,
+         Political_Affiliation_Fr = `....cand_5_party_french_name`,
+         Gender = `....cand_5_gender_code`,
+         Result = `....cand_5_elected_indicator`,
+         Incumbent = `....cand_5_incumbent_indicator`,
+         Votes = `....cand_5_poll_vote`)
+
+# Candidate 6. 
+cand6 <- parl36_cand %>% 
+  select("ID", "Candidate_6", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_6_"))
+
+cand6 <- cand6 %>% 
+  rename(Candidate = Candidate_6,
+         Political_Affiliation = `....cand_6_party_english_name`,
+         Political_Affiliation_Fr = `....cand_6_party_french_name`,
+         Gender = `....cand_6_gender_code`,
+         Result = `....cand_6_elected_indicator`,
+         Incumbent = `....cand_6_incumbent_indicator`,
+         Votes = `....cand_6_poll_vote`)
+
+# Candidate 7. 
+cand7 <- parl36_cand %>% 
+  select("ID", "Candidate_7", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_7_"))
+
+cand7 <- cand7 %>% 
+  rename(Candidate = Candidate_7,
+         Political_Affiliation = `....cand_7_party_english_name`,
+         Political_Affiliation_Fr = `....cand_7_party_french_name`,
+         Gender = `....cand_7_gender_code`,
+         Result = `....cand_7_elected_indicator`,
+         Incumbent = `....cand_7_incumbent_indicator`,
+         Votes = `....cand_7_poll_vote`)
+
+# Candidate 8. 
+cand8 <- parl36_cand %>% 
+  select("ID", "Candidate_8", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_8_"))
+
+cand8 <- cand8 %>% 
+  rename(Candidate = Candidate_8,
+         Political_Affiliation = `....cand_8_party_english_name`,
+         Political_Affiliation_Fr = `....cand_8_party_french_name`,
+         Gender = `....cand_8_gender_code`,
+         Result = `....cand_8_elected_indicator`,
+         Incumbent = `....cand_8_incumbent_indicator`,
+         Votes = `....cand_8_poll_vote`)
+
+# Candidate 9. 
+cand9 <- parl36_cand %>% 
+  select("ID", "Candidate_9", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_9_"))
+
+cand9 <- cand9 %>% 
+  rename(Candidate = Candidate_9,
+         Political_Affiliation = `....cand_9_party_english_name`,
+         Political_Affiliation_Fr = `....cand_9_party_french_name`,
+         Gender = `....cand_9_gender_code`,
+         Result = `....cand_9_elected_indicator`,
+         Incumbent = `....cand_9_incumbent_indicator`,
+         Votes = `....cand_9_poll_vote`)
+
+# Candidate 10. 
+cand10 <- parl36_cand %>% 
+  select("ID", "Candidate_10", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_10_"))
+
+cand10 <- cand10 %>% 
+  rename(Candidate = Candidate_10,
+         Political_Affiliation = `....cand_10_party_english_name`,
+         Political_Affiliation_Fr = `....cand_10_party_french_name`,
+         Gender = `....cand_10_gender_code`,
+         Result = `....cand_10_elected_indicator`,
+         Incumbent = `....cand_10_incumbent_indicator`,
+         Votes = `....cand_10_poll_vote`)
+
+# Candidate 11. 
+cand11 <- parl36_cand %>% 
+  select("ID", "Candidate_11", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_11_"))
+
+cand11 <- cand11 %>% 
+  rename(Candidate = Candidate_11,
+         Political_Affiliation = `....cand_11_party_english_name`,
+         Political_Affiliation_Fr = `....cand_11_party_french_name`,
+         Gender = `....cand_11_gender_code`,
+         Result = `....cand_11_elected_indicator`,
+         Incumbent = `....cand_11_incumbent_indicator`,
+         Votes = `....cand_11_poll_vote`)
+
+# Candidate 12. 
+cand12 <- parl36_cand %>% 
+  select("ID", "Candidate_12", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_12_"))
+
+cand12 <- cand12 %>% 
+  rename(Candidate = Candidate_12,
+         Political_Affiliation = `....cand_12_party_english_name`,
+         Political_Affiliation_Fr = `....cand_12_party_french_name`,
+         Gender = `....cand_12_gender_code`,
+         Result = `....cand_12_elected_indicator`,
+         Incumbent = `....cand_12_incumbent_indicator`,
+         Votes = `....cand_12_poll_vote`)
+
+# Candidate 13. 
+cand13 <- parl36_cand %>% 
+  select("ID", "Candidate_13", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_13_"))
+
+cand13 <- cand13 %>% 
+  rename(Candidate = Candidate_13,
+         Political_Affiliation = `....cand_13_party_english_name`,
+         Political_Affiliation_Fr = `....cand_13_party_french_name`,
+         Gender = `....cand_13_gender_code`,
+         Result = `....cand_13_elected_indicator`,
+         Incumbent = `....cand_13_incumbent_indicator`,
+         Votes = `....cand_13_poll_vote`)
+
+# Concatenate the data, which now share the same number of columns; each according to a standardized naming scheme. Remove redundant objects.
+parl36_cand <- rbind(cand1, cand2, cand3, cand4, cand5, cand6, cand7, cand8, cand9, cand10, cand11, cand12, cand13)
+rm(cand1, cand2, cand3, cand4, cand5, cand6, cand7, cand8, cand9, cand10, cand11, cand12, cand13)
+
+# Clean candidate names.
+parl36_cand$Candidate <- gsub(", NA", "", parl36_cand$Candidate)
+parl36_cand$Candidate <- gsub("((?:[^,]+, ){1}[^,]+),", "\\1", parl36_cand$Candidate) 
+
+# Match Data by ID.
+parl36 <- parl36_cand %>% 
+  left_join(parl36, 
+            by = c("ID","Ed_Code", "Polling_Station_No", "Polling_Station_Name"),
+            keep = FALSE)
+
+# Remove rows missing candidates. 
+parl36[parl36$Candidate=="NA",] <- NA 
+parl36 <- parl36 %>% drop_na(Candidate)
+
+# Create a new column to identify the candidate who was elected in each ED. Remove redundant columns.
+parl37 <- parl37 %>% 
+  unite(col="Elected_Candidate", 
+        c("....elected_last_name", "....elected_first_name", "....elected_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep =", ")
+
+# Unite candidate columns. Remove redundant columns.
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_1", 
+        c("....cand_1_last_name", "....cand_1_first_name", "....cand_1_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_2", 
+        c("....cand_2_last_name", "....cand_2_first_name", "....cand_2_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_3", 
+        c("....cand_3_last_name", "....cand_3_first_name", "....cand_3_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_4", 
+        c("....cand_4_last_name", "....cand_4_first_name", "....cand_4_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_5", 
+        c("....cand_5_last_name", "....cand_5_first_name", "....cand_5_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_6", 
+        c("....cand_6_last_name", "....cand_6_first_name", "....cand_6_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_7", 
+        c("....cand_7_last_name", "....cand_7_first_name", "....cand_7_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_8", 
+        c("....cand_8_last_name", "....cand_8_first_name", "....cand_8_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_9", 
+        c("....cand_9_last_name", "....cand_9_first_name", "....cand_9_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_10", 
+        c("....cand_10_last_name", "....cand_10_first_name", "....cand_10_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_11", 
+        c("....cand_11_last_name", "....cand_11_first_name", "....cand_11_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_12", 
+        c("....cand_12_last_name", "....cand_12_first_name", "....cand_12_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+parl37 <- parl37 %>% 
+  unite(col = "Candidate_13", 
+        c("....cand_13_last_name", "....cand_13_first_name", "....cand_13_middle_name"), 
+        remove = TRUE, 
+        na.rm = FALSE, 
+        sep=", ") 
+
+# Clean `Elected_Candidate`
+parl37$Elected_Candidate <- gsub(", NA", "", parl37$Elected_Candidate)
+parl37$Elected_Candidate <- gsub("((?:[^,]+, ){1}[^,]+),", "\\1", parl37$Elected_Candidate) # Hat tip to P.K.Rajwanshi for working out this regular expression. 
+
+# Subset data. Create a separate data frame for candidates (wide format). Include variables on EDs/polls to serve as a combined key that can later be used to match data. 
+parl37_cand <- parl37 %>% 
+  select(starts_with("Candidate_"), 
+         "Ed_Code",
+         "ID",
+         starts_with("Polling_Station_"), 
+         starts_with("...."))
+
+# Treat blank cells as missing values.
+parl37_cand <- parl37_cand %>% 
+  mutate_all(na_if, "")
+
+# Simplify election results. Keep only the data already in tidy(ish) format.
+parl37 <- parl37 %>% 
+  select(-contains("...."), 
+         -contains("Candidate_"))
+
+# Subset data and rename columns for each candidate number. 
+cand1 <- parl37_cand %>% 
+  select("ID", "Candidate_1", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_1_"))
+
+cand1 <- cand1 %>% 
+  rename(Candidate = Candidate_1,
+         Political_Affiliation = `....cand_1_party_english_name`,
+         Political_Affiliation_Fr = `....cand_1_party_french_name`,
+         Gender = `....cand_1_gender_code`,
+         Result = `....cand_1_elected_indicator`,
+         Incumbent = `....cand_1_incumbent_indicator`,
+         Votes = `....cand_1_poll_vote`)
+
+# Variations on the code above is used to tidy data for each candidate. 
+cand2 <- parl37_cand %>% 
+  select("ID", "Candidate_2", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_2_"))
+
+cand2 <- cand2 %>% 
+  rename(Candidate = Candidate_2,
+         Political_Affiliation = `....cand_2_party_english_name`,
+         Political_Affiliation_Fr = `....cand_2_party_french_name`,
+         Gender = `....cand_2_gender_code`,
+         Result = `....cand_2_elected_indicator`,
+         Incumbent = `....cand_2_incumbent_indicator`,
+         Votes = `....cand_2_poll_vote`)
+
+# Candidate 3. 
+cand3 <- parl37_cand %>% 
+  select("ID", "Candidate_3", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_3_"))
+
+cand3 <- cand3 %>% 
+  rename(Candidate = Candidate_3,
+         Political_Affiliation = `....cand_3_party_english_name`,
+         Political_Affiliation_Fr = `....cand_3_party_french_name`,
+         Gender = `....cand_3_gender_code`,
+         Result = `....cand_3_elected_indicator`,
+         Incumbent = `....cand_3_incumbent_indicator`,
+         Votes = `....cand_3_poll_vote`)
+
+# Candidate 4. 
+cand4 <- parl37_cand %>% 
+  select("ID", "Candidate_4", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_4_"))
+
+cand4 <- cand4 %>% 
+  rename(Candidate = Candidate_4,
+         Political_Affiliation = `....cand_4_party_english_name`,
+         Political_Affiliation_Fr = `....cand_4_party_french_name`,
+         Gender = `....cand_4_gender_code`,
+         Result = `....cand_4_elected_indicator`,
+         Incumbent = `....cand_4_incumbent_indicator`,
+         Votes = `....cand_4_poll_vote`)
+
+# Candidate 5. 
+cand5 <- parl37_cand %>% 
+  select("ID", "Candidate_5", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_5_"))
+
+cand5 <- cand5 %>% 
+  rename(Candidate = Candidate_5,
+         Political_Affiliation = `....cand_5_party_english_name`,
+         Political_Affiliation_Fr = `....cand_5_party_french_name`,
+         Gender = `....cand_5_gender_code`,
+         Result = `....cand_5_elected_indicator`,
+         Incumbent = `....cand_5_incumbent_indicator`,
+         Votes = `....cand_5_poll_vote`)
+
+# Candidate 6. 
+cand6 <- parl37_cand %>% 
+  select("ID", "Candidate_6", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_6_"))
+
+cand6 <- cand6 %>% 
+  rename(Candidate = Candidate_6,
+         Political_Affiliation = `....cand_6_party_english_name`,
+         Political_Affiliation_Fr = `....cand_6_party_french_name`,
+         Gender = `....cand_6_gender_code`,
+         Result = `....cand_6_elected_indicator`,
+         Incumbent = `....cand_6_incumbent_indicator`,
+         Votes = `....cand_6_poll_vote`)
+
+# Candidate 7. 
+cand7 <- parl37_cand %>% 
+  select("ID", "Candidate_7", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_7_"))
+
+cand7 <- cand7 %>% 
+  rename(Candidate = Candidate_7,
+         Political_Affiliation = `....cand_7_party_english_name`,
+         Political_Affiliation_Fr = `....cand_7_party_french_name`,
+         Gender = `....cand_7_gender_code`,
+         Result = `....cand_7_elected_indicator`,
+         Incumbent = `....cand_7_incumbent_indicator`,
+         Votes = `....cand_7_poll_vote`)
+
+# Candidate 8. 
+cand8 <- parl37_cand %>% 
+  select("ID", "Candidate_8", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_8_"))
+
+cand8 <- cand8 %>% 
+  rename(Candidate = Candidate_8,
+         Political_Affiliation = `....cand_8_party_english_name`,
+         Political_Affiliation_Fr = `....cand_8_party_french_name`,
+         Gender = `....cand_8_gender_code`,
+         Result = `....cand_8_elected_indicator`,
+         Incumbent = `....cand_8_incumbent_indicator`,
+         Votes = `....cand_8_poll_vote`)
+
+# Candidate 9. 
+cand9 <- parl37_cand %>% 
+  select("ID", "Candidate_9", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_9_"))
+
+cand9 <- cand9 %>% 
+  rename(Candidate = Candidate_9,
+         Political_Affiliation = `....cand_9_party_english_name`,
+         Political_Affiliation_Fr = `....cand_9_party_french_name`,
+         Gender = `....cand_9_gender_code`,
+         Result = `....cand_9_elected_indicator`,
+         Incumbent = `....cand_9_incumbent_indicator`,
+         Votes = `....cand_9_poll_vote`)
+
+# Candidate 10. 
+cand10 <- parl37_cand %>% 
+  select("ID", "Candidate_10", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_10_"))
+
+cand10 <- cand10 %>% 
+  rename(Candidate = Candidate_10,
+         Political_Affiliation = `....cand_10_party_english_name`,
+         Political_Affiliation_Fr = `....cand_10_party_french_name`,
+         Gender = `....cand_10_gender_code`,
+         Result = `....cand_10_elected_indicator`,
+         Incumbent = `....cand_10_incumbent_indicator`,
+         Votes = `....cand_10_poll_vote`)
+
+# Candidate 11. 
+cand11 <- parl37_cand %>% 
+  select("ID", "Candidate_11", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_11_"))
+
+cand11 <- cand11 %>% 
+  rename(Candidate = Candidate_11,
+         Political_Affiliation = `....cand_11_party_english_name`,
+         Political_Affiliation_Fr = `....cand_11_party_french_name`,
+         Gender = `....cand_11_gender_code`,
+         Result = `....cand_11_elected_indicator`,
+         Incumbent = `....cand_11_incumbent_indicator`,
+         Votes = `....cand_11_poll_vote`)
+
+# Candidate 12. 
+cand12 <- parl37_cand %>% 
+  select("ID", "Candidate_12", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_12_"))
+
+cand12 <- cand12 %>% 
+  rename(Candidate = Candidate_12,
+         Political_Affiliation = `....cand_12_party_english_name`,
+         Political_Affiliation_Fr = `....cand_12_party_french_name`,
+         Gender = `....cand_12_gender_code`,
+         Result = `....cand_12_elected_indicator`,
+         Incumbent = `....cand_12_incumbent_indicator`,
+         Votes = `....cand_12_poll_vote`)
+
+# Candidate 13. 
+cand13 <- parl37_cand %>% 
+  select("ID", "Candidate_13", "Ed_Code", "Polling_Station_No", "Polling_Station_Name", starts_with("....cand_13_"))
+
+cand13 <- cand13 %>% 
+  rename(Candidate = Candidate_13,
+         Political_Affiliation = `....cand_13_party_english_name`,
+         Political_Affiliation_Fr = `....cand_13_party_french_name`,
+         Gender = `....cand_13_gender_code`,
+         Result = `....cand_13_elected_indicator`,
+         Incumbent = `....cand_13_incumbent_indicator`,
+         Votes = `....cand_13_poll_vote`)
+
+# Concatenate the data, which now share the same number of columns; each according to a standardized naming scheme. Remove redundant objects.
+parl37_cand <- rbind(cand1, cand2, cand3, cand4, cand5, cand6, cand7, cand8, cand9, cand10, cand11, cand12, cand13)
+rm(cand1, cand2, cand3, cand4, cand5, cand6, cand7, cand8, cand9, cand10, cand11, cand12, cand13)
+
+# Clean candidate names.
+parl37_cand$Candidate <- gsub(", NA", "", parl37_cand$Candidate)
+parl37_cand$Candidate <- gsub("((?:[^,]+, ){1}[^,]+),", "\\1", parl37_cand$Candidate) 
+
+# Match Data by ID.
+parl37 <- parl37_cand %>% 
+  left_join(parl37, 
+            by = c("ID","Ed_Code", "Polling_Station_No", "Polling_Station_Name"),
+            keep = FALSE)
+
+# Remove rows missing candidates. 
+parl37[parl37$Candidate=="NA",] <- NA 
+parl37 <- parl37 %>% drop_na(Candidate)
+
+# TODO Check to see if parl 36 and 37 work in this workflow.
+
+# ___ end section on Parliaments 36 and 37 ___
 
 # ---- Concatenate, Clean, and Export ----
 
