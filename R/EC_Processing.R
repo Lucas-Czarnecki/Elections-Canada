@@ -1416,6 +1416,46 @@ parl36_37 <- parl36_37 %>%
 parl36_37 <- parl36_37 %>% 
   separate(col = First_Name, into = c("First_Name", "Middle_Names"), sep = " ", remove = FALSE)
 
+# Enforce a consistent naming scheme for provinces and territories.
+# Note: A constitutional amendment in 2001 was passed to change the name of the province "Newfoundland" to "Newfoundland and Labrador". Note that for the purpose of this project, and consistent with the CED naming scheme, the province is referred to as "Newfoundland and Labrador" for all election years. 
+parl36_37$Province_Territory[parl36_37$Province_Territory == "Newfoundland"] <- "Newfoundland and Labrador"
+parl36_37$Province_Territory[parl36_37$Province_Territory == "Yukon Territory"] <- "Yukon"
+
+# French spellings are handled in the same manner.
+parl36_37$Province_Territory[parl36_37$Province_Territory == "Terre-Neuve"] <- "Terre-Neuve-et-Labrador"
+parl36_37$Province_Territory[parl36_37$Province_Territory == "Territoire du Yukon"] <- "Yukon"
+
+# Clean electoral district codes. More recent data use a five-digit numerical code to represent each riding. The variable `Ed_Code` contains the relevant information to create this variable.
+parl36_37$Ed_Code <- gsub("ED", "", parl36_37$Ed_Code)
+parl36_37$Ed_Code <- gsub("-", "", parl36_37$Ed_Code)
+
+# Rename column to match more recent results.
+parl36_37 <- parl36_37 %>% 
+  rename(Electoral_District_No = Ed_Code)
+
+# Transform variables into their appropriate class.
+
+# As date.
+parl36_37$Election_Date <- as.Date(parl36_37$Election_Date)
+
+# As Factors
+parl36_37$Province_Territory <- factor(parl36_37$Province_Territory, levels = c("British Columbia", "Alberta", "Saskatchewan", "Manitoba", "Ontario", "Quebec", "Newfoundland and Labrador", "New Brunswick", "Nova Scotia", "Prince Edward Island", "Yukon", "Northwest Territories", "Nunavut"))
+# TODO `Province_Territory_Fr`
+parl36_37$Election_Type <- as.factor(parl36_37$Election_Type)
+parl36_37$Parliament <- as.factor(parl36_37$Parliament)
+parl36_37$Constituency <- as.factor(parl36_37$Constituency)
+parl36_37$Constituency_Fr <- as.factor(parl36_37$Constituency_Fr)
+parl36_37$Political_Affiliation <- as.factor(parl36_37$Political_Affiliation) 
+parl36_37$Result <- as.factor(parl36_37$Result)
+parl36_37$Polling_Station_Name <- as.factor(parl36_37$Polling_Station_Name)
+
+# As numeric.
+parl36_37$Electors <- as.numeric(parl36_37$Electors)
+parl36_37$Votes <- as.numeric(parl36_37$Votes)
+parl36_37$Rejected_Ballots_PollNo <- as.numeric(parl36_37$Rejected_Ballots_PollNo)
+
+# FIXME It appears that `Constituency` consists of 335 levels while `Constituency_Fr` consists of 336. What happened? As expected, when checking the length of unique constituency names there are 301 unique ridings in English and French for both the 1997 and 2000 elections.
+
 # ___ end section on Parliaments 36 and 37 ___
 
 # ---- Concatenate, Clean, and Export ----
