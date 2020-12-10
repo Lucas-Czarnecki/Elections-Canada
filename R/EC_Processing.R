@@ -1081,6 +1081,9 @@ parl36 <- parl36_cand %>%
 parl36[parl36$Candidate=="NA",] <- NA 
 parl36 <- parl36 %>% drop_na(Candidate)
 
+# Remove redundant data frame.
+rm(parl36_cand)
+
 # Create a new column to identify the candidate who was elected in each ED. Remove redundant columns.
 parl37 <- parl37 %>% 
   unite(col="Elected_Candidate", 
@@ -1389,7 +1392,29 @@ parl37 <- parl37_cand %>%
 parl37[parl37$Candidate=="NA",] <- NA 
 parl37 <- parl37 %>% drop_na(Candidate)
 
-# TODO Check to see if parl 36 and 37 work in this workflow.
+# Remove redundant data frame.
+rm(parl37_cand)
+
+# Wrangle columns in cleaned data frames
+# Note: For simplicity the two data frames can be concatenated as they share the same variables and require the same data cleaning.
+
+# Concatenate.
+parl36_37 <- rbind(parl36, parl37) 
+
+parl36_37 <- parl36_37 %>% 
+  select(Province_Territory, Province_Territory_Fr, Election_Date, Election_Type, Parliament, Constituency, Constituency_Fr, Ed_Code, Poll_Electors, Total_Electors, Polling_Station_Name, Polling_Station_No, Merged_With, Void_Poll, No_Poll_Held, Candidate, Political_Affiliation, Political_Affiliation_Fr, Incumbent, Result, Votes, Rejected_Ballots_PollNo)
+
+# TODO Create variables for first, middle, and last names. 
+# FIXME In Parl36_37 the variable `Ed_Code` is equivalent to other data frames' `Electoral_District_No`. The formatting, however, is different in Ed_Code and needs to be reformatted for consistency.
+# Note: `Parl36_37` includes a variable `Total_Electors` that summarizes the data at the constituency_level. Another variable, namely `Poll_Electors`, breaks the results down by poll. I can use the two variable to confirm that the data have been wrangled correctly. 
+
+# Create variables for first and last names. 
+parl36_37 <- parl36_37 %>% 
+  separate(col = Candidate, into = c("Last_Name", "First_Name"), sep = ", ", remove = FALSE)
+
+# Create a variable for middle names.
+parl36_37 <- parl36_37 %>% 
+  separate(col = First_Name, into = c("First_Name", "Middle_Names"), sep = " ", remove = FALSE)
 
 # ___ end section on Parliaments 36 and 37 ___
 
